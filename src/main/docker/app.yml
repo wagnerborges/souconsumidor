@@ -1,0 +1,19 @@
+version: '2'
+services:
+    souconsumidor-app:
+        image: souconsumidor
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://souconsumidor-mysql:3306/souconsumidor?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=souconsumidor-elasticsearch:9300
+        ports:
+            - 8080:8080
+    souconsumidor-mysql:
+        extends:
+            file: mysql.yml
+            service: souconsumidor-mysql
+    souconsumidor-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: souconsumidor-elasticsearch
